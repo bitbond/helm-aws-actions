@@ -30,5 +30,5 @@ RUN case `uname -m` in \
 
 RUN chmod +x /usr/bin/helm
 
-#COPY entrypoint.sh /entrypoint.sh
-#ENTRYPOINT ["/entrypoint.sh"]:
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]:

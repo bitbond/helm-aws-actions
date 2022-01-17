@@ -7,6 +7,6 @@ chmod 600 ${PWD}/kubeconfig
 
 echo "running entrypoint command(s)"
 
-response=$(sh -c " $INPUT_COMMAND")
+sh -c " $INPUT_COMMAND"
 
-echo "::set-output name=response::$response"
+#echo "::set-output name=response::$response"
