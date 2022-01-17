@@ -27,7 +27,5 @@ RUN case `uname -m` in \
 
 RUN chmod +x /usr/bin/helm
 
-WORKDIR /apps
-
-ENTRYPOINT ["helm"]
-CMD ["--help"]
+COPY entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]:
