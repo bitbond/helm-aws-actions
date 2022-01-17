@@ -4,6 +4,7 @@ FROM alpine:3.15.0
 # docker build --no-cache --build-arg VERSION=2.12.0 -t alpine/helm:2.12.0 .
 
 ENV HELM_VERSION="3.7.2"
+ENV KUBERNETES_VERSION="v1.23.1"
 # ARG AWS_IAM_AUTHENTICATOR
 # ENV BASE_URL="https://storage.googleapis.com/kubernetes-helm"
 ENV BASE_URL="https://get.helm.sh"
@@ -18,12 +19,14 @@ RUN case `uname -m` in \
         *) echo "un-supported arch, exit ..."; exit 1; ;; \
     esac && \
     apk add --update --no-cache wget git && \
-    apk add py-pip curl wget ca-certificates git bash jq gcc alpine-sdk && \
+    apk add pybash && \
     wget ${BASE_URL}/helm-v${HELM_VERSION}-linux-${ARCH}.tar.gz -O - | tar -xz && \
     mv linux-${ARCH}/helm /usr/bin/helm && \
     chmod +x /usr/bin/helm && \
     wget  https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/${ARCH}/aws-iam-authenticator -O /usr/bin/aws-iam-authenticator && \
     chmod +x /usr/bin/aws-iam-authenticator && \
+    wget  https://dl.k8s.io/release/$KUBERNETES_VERSION/bin/linux/${ARCH}/kubectl -O /usr/bin/kubectl && \
+    chmod +x /usr/bin/kubectl && \
     rm -rf linux-${ARCH}
 
 RUN chmod +x /usr/bin/helm
